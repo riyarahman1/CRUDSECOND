@@ -1,0 +1,73 @@
+<table class="table table-bordered">
+  <thead class="alert-success">
+    <tr>
+      <th>Id</th>
+      <th>Category</th>
+      <th>Action</th>
+      <th>Enable/disable</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in read %}
+    <tr>
+      <td>{{forloop.counter}}</td>
+      <td>{{ i.name }}</td>
+
+      <td>
+        <div class="text-center">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editmodal">
+            Edit
+          </button>
+        </div>
+
+        <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Category<h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="mb-3">
+                    <label>Category</label>
+                    <input type="text" class="form-control" value="{{i.name}}" name="name">
+                  </div>
+                  <div class="mb-3">
+                    <input type="hidden" id="category_id" value="{{i.id}}">
+                    <button type="submit" id="update" class="btn btn-warning user-edit">Update</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <td class="text-center">
+
+
+        <button class="toggle-active-btn btn-info" data-projectcategory-id="{{ i.id }}"
+          data-csrf-token="{{ csrf_token }}">
+          {% if i.is_active %}
+          Disable
+          {% else %}
+          Enable
+          {% endif %}
+        </button>
+        {% comment %}
+      <td>
+        {% if data.is_active %}
+        <div>
+          {% else %}
+
+          {% comment %} <a href="#">ENABLE</a> {% endcomment %}
+
+      </td>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

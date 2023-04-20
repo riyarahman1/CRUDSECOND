@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% comment %} <form> 
+        {% csrf_token %}
+        <form>
+        <input type="hidden" id="member_id" value="{{ data.id }}"/>
+        <div class="mb-3">
+            <label>name</label>
+            <input type="text" id="name" value="{{ data.name }}" class="form-control" required="required"/>
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" id="update" class="btn btn-warning">Update</button>
+        </div>
+    </form>  
+ {% endcomment %}
+
+    
+{% endblock %}
+
+

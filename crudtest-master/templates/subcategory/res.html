@@ -1,0 +1,85 @@
+<table class="table table-bordered">
+  <thead class="alert-success">
+    <tr>
+      <th>Id</th>
+      <th>Category</th>
+      <th>Project Name</th>
+      <th> Action </th>
+      <th>Enable/disable</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in readd %}
+    <tr>
+      <td>{{forloop.counter}}</td>
+      <td>{{ i.category }}</td>
+      <td>{{ i.project_name}}</td>
+
+      <td>
+
+        <div class="text-center">
+          <button type="button" class="btn btn-primary center" data-toggle="modal" data-target="#editmodal1">
+            Edit
+          </button>
+        </div>
+
+        <div class="modal fade" id="editmodal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Subcategory<h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+              </div>
+              <div class="modal-body">
+                <form class="form-inline">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label for="">Category</label>
+                    <div class="form-group">
+                      <select id="category" name="category">
+                        {% for i in values %}
+                        <option value="{{ i.id }}">{{ i.name }}</option>
+                        {% endfor %}
+                    </select>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label>project Name</label>
+                    <input type="text" id="project_name" name="project_name" class="form-control" style="width:30%;"
+                      required="required" />
+                  </div>
+                  <div class="mb-3">
+                    <button type="button" id="create1" class="btn btn-primary">Save
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </td>
+
+      <td class="text-center">
+
+
+        <button class="toggle-active-btn" data-projectsubcategory-id="{{ i.project_id }}"
+          data-csrf-token="{{ csrf_token }}">
+          {% if i.is_active %}
+          Disable
+          {% else %}
+          Enable
+          {% endif %}
+        </button>
+      </td>
+
+    </tr>
+
+
+
+    {% endfor %}
+  </tbody>
+</table>
