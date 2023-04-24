@@ -115,3 +115,54 @@ def toggle_projectsubcategory_active(request, projectsubcategory_id):
 
 
 
+# -------------------------Project------------------------------
+
+def project(request):
+    data=Project_Subcategory.objects.all()
+ 
+
+    if request.method == 'POST':
+     
+        
+        subcategory = request.POST.get('subcategory')
+        print(subcategory)
+    
+    
+        title = request.POST.get('title')
+        print(title)
+
+        description = request.POST.get('description')
+        print(description)
+
+        # # Create a new project instance
+        project = Project(subcategory=subcategory, title=title,description = description,is_active= True)
+        project.save()
+
+        response_data = {'status': 'success', 'message': 'Product created successfully'}
+    # else:
+    #     response_data = {'status': 'error', 'message': 'Invalid request'}
+        
+        return JsonResponse(response_data)
+    return render(request,'projecttask/home.html',{'data':data})
+
+
+
+def viewproject(request):
+    object = Project.objects.all()
+    print(object)
+    context = {'object':object}
+    return render(request, 'projecttask/table.html', context)
+    
+
+@csrf_exempt
+def toggle_project_active(request,project_id):
+    try:
+        create = Project.objects.get(id=project_id)
+        
+    except create.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': 'Product not found'})
+    
+    create.is_active = not create.is_active
+    create.save()
+    
+    return JsonResponse({'status': 'success', 'is_active': create.is_active})
