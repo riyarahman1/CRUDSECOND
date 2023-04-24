@@ -10,11 +10,12 @@
     </tr>
   </thead>
   <tbody>
-    {% for i in readd %}
+    {% for i in object %}
     <tr>
       <td>{{forloop.counter}}</td>
-      <td>{{ i.category }}</td>
-      <td>{{ i.project_name}}</td>
+      <td>{{ i.subcategory }}</td>
+      <td>{{ i.title}}</td>
+      <td>{{ i.description}}</td>
       <td>
 
         <div class="text-center">
@@ -69,7 +70,7 @@
       <td class="text-center">
 
 
-        <button class="toggle-active-btn" data-projectsubcategory-id="{{ i.project_id }}"
+        <button class="toggle-active-btn" data-project-id="{{ i.project_id }}"
           data-csrf-token="{{ csrf_token }}">
           {% if i.is_active %}
           Disable

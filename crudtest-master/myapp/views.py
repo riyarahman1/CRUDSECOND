@@ -121,30 +121,41 @@ def project(request):
     data=Project_Subcategory.objects.all()
  
 
-    if request.method == 'POST':
+    # if request.method == 'POST':
      
         
-        subcategory = request.POST.get('subcategory')
-        print(subcategory)
+    #     subcategory = request.POST.get('subcategory')
+    #     print(subcategory)
     
     
-        title = request.POST.get('title')
-        print(title)
+    #     title = request.POST.get('title')
+    #     print(title)
 
-        description = request.POST.get('description')
-        print(description)
+    #     description = request.POST.get('description')
+    #     print(description)
 
-        # # Create a new project instance
-        project = Project(subcategory=subcategory, title=title,description = description,is_active= True)
-        project.save()
+    #     # # Create a new project instance
+    #     project = Project(subcategory=subcategory, title=title,description=description)
+    #     project.save()
 
-        response_data = {'status': 'success', 'message': 'Product created successfully'}
-    # else:
-    #     response_data = {'status': 'error', 'message': 'Invalid request'}
+    #     response_data = {'status': 'success', 'message': 'Product created successfully'}
+    # # else:
+    # #     response_data = {'status': 'error', 'message': 'Invalid request'}
         
+    #     return JsonResponse(response_data)
+    # return render(request,'projecttask/home.html',{'data':data})
+    if request.method == 'POST':
+        subcategory_id = request.POST.get('subcategory')
+        subcategory = Project_Subcategory.objects.get(id=subcategory_id)
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        is_active = request.POST.get('is_active', False) == 'on'
+        project = Project(subcategory=subcategory, title=title, description=description,is_active=is_active)
+        project.save()
+        response_data = {'status': 'success', 'message': 'Project created successfully'}
         return JsonResponse(response_data)
     return render(request,'projecttask/home.html',{'data':data})
-
+    
 
 
 def viewproject(request):
@@ -155,14 +166,13 @@ def viewproject(request):
     
 
 @csrf_exempt
-def toggle_project_active(request,project_id):
+def toggle_active(request,project_id):
     try:
-        create = Project.objects.get(id=project_id)
-        
-    except create.DoesNotExist:
+        project = Project.objects.get(id=project_id)
+    except Project.DoesNotExist:
         return JsonResponse({'status': 'error', 'message': 'Product not found'})
     
-    create.is_active = not create.is_active
-    create.save()
+    project.is_active = not project.is_active
+    project.save()
     
-    return JsonResponse({'status': 'success', 'is_active': create.is_active})
+    return JsonResponse({'status': 'success', 'is_active': project.is_active})

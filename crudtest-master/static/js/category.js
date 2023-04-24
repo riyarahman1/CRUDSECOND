@@ -92,18 +92,18 @@ $(document).ready(function () {
       
     
     $(document).on('click', '.toggle-active-btn', function () {
-        var projectcategory_id = $(this).data('projectcategory-id');
+        var project_id = $(this).data('projectcategory-id');
         var csrf_token = $(this).data('csrf-token');
 
         $.ajax({
-            url: '/projectcategory/' + projectcategory_id + '/toggle-active/',
+            url: '/projectcategory/' + project_id + '/toggle-active/',
             method: 'POST',
             data: {
                 'csrfmiddlewaretoken': csrf_token
             },
             success: function (response) {
                 if (response.status === 'success') {
-                    $('.toggle-active-btn[data-projectcategory-id=' + projectcategory_id + ']').text(response.is_active ? 'Disable' : 'Enable');
+                    $('.toggle-active-btn[data-projectcategory-id=' + project_id + ']').text(response.is_active ? 'Disable' : 'Enable');
                 } else {
                     alert(response.message);
                 }

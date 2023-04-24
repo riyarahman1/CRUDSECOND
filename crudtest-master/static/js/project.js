@@ -20,7 +20,7 @@ $(document).ready(function () {
             alert("please complete the required fields");
         } else {
             $.ajax({
-                url: 'project',
+                url: '/project',
                 type: 'POST',
                 data: {
                     subcategory: subcategory,
@@ -39,28 +39,32 @@ $(document).ready(function () {
         }
     });
 
-    $(document).on('click', '.toggle-active-btn', function () {
-        var project_id = $(this).data('projectcategory-id');
-        var csrf_token = $(this).data('csrf-token');
-
-        $.ajax({
-            url: '/project/' + project_id + '/toggle-active/',
+    $(document).ready(function () {
+        $(document).on("click", ".toggle-active-btn", function () {
+          var project_id = $(this).data('project-id');
+          var csrf_token = $(this).data('csrf-token');
+    
+          $.ajax({
+            url: '/project' + project_id + '/toggle-active/',
             method: 'POST',
             data: {
+                'project_id': project_id,
                 'csrfmiddlewaretoken': csrf_token
             },
             success: function (response) {
                 if (response.status === 'success') {
-                    $('.toggle-active-btn[data-projectcategory-id=' + project_id + ']').text(response.is_active ? 'Disable' : 'Enable');
-                } else {
+                    var toggleButtonText = response.is_active ? 'Disable' : 'Enable';
+                    $('.toggle-active-btn[data-project-id=' + project_id + ']').text(toggleButtonText);
+                  } else {
                     alert(response.message);
-                }
-            },
+                  }
+                },
             error: function (xhr, status, error) {
-                console.log('Error:', error);
+              console.log('Error:', error);
             }
+          });
         });
-    });
+      }); 
     function Read() {
         $.ajax({
             async: true,

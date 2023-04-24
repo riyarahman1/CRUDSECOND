@@ -20,6 +20,6 @@ urlpatterns = [
   
     path("project",views.project,name="project"),
     path('project/viewproject/',views.viewproject, name='viewproject'),
-    path('project/<int:project_id>/toggle-active/', views.toggle_project_active, name='toggle_project_active'),
+    path('project/<int:project_id>/toggle-active/', views.toggle_active, name='toggle_active'),
 
 ]
